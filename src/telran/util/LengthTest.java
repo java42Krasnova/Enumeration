@@ -27,6 +27,14 @@ class LengthTest {
 		assertTrue(l1_CM.equals(l2_IN));// 5in == 12,f cm
 		assertFalse(l2_IN.equals(l3_KM));// 12,7 cm == 5 in
 		assertTrue(l4_FT.equals(new Length(1.2192f, LengthUnit.M)));// 4ft == 1,2192m
+		Length l1 = new Length(2.37f, LengthUnit.FT);
+		Length l2 = new Length(722.376f, LengthUnit.MM);
+		Length l3 = new Length(0.722376f, LengthUnit.M);
+		assertTrue(l1.equals(l3));
+		assertTrue(l1.equals(l2.convert(LengthUnit.KM)));
+		assertTrue(l1.equals(l1));
+		assertFalse(l3.equals(l2_IN));
+		assertFalse(l1_CM.equals(new Length(12.71f, LengthUnit.CM))); //12.7cm!=12.71cm
 	}
 
 	@Test
@@ -35,6 +43,9 @@ class LengthTest {
 		assertTrue(isGreather(l4_FT, l2_IN));// 1219.2 mm > 127mm
 		assertFalse(isGreather(l2_IN, l4_FT));
 		assertEquals(0, l1_CM.compareTo(l2_IN));// 5in == 12,7 cm
+		assertTrue(isGreather(l5_M, l7_M));// 10000m>10m
+		assertEquals(0, l2_IN.compareTo(l2_IN));
+		assertFalse(isGreather(l1_CM, new Length(12.71f, LengthUnit.CM)));//12.7cm<12.71cm
 	}
 
 	private boolean isGreather(Length l1, Length l2) {
@@ -59,7 +70,7 @@ class LengthTest {
 	@Test
 	void testBetween() {
 		// TODO done!
-		Length exp1 = new Length(1f, LengthUnit.M);// 1 m -> 200 cm
+		Length exp1 = new Length(1f, LengthUnit.M);// 1 m -> 200 cm 
 		assertEquals(exp1, LengthUnit.M.between(new Length(200f, LengthUnit.CM), new Length(1f, LengthUnit.M)));
 		Length exp2 = new Length(9000f, LengthUnit.CM); // 10000m -> 1 km
 		assertEquals(exp2.amount, LengthUnit.M.between(l5_M, l3_KM).amount, 0.01f);

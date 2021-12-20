@@ -15,7 +15,12 @@ public class Length implements Comparable<Length> {
 	@Override
 	public boolean equals(Object obj) {
 		// TODO done!
-		return compareTo((Length) obj) == 0;
+		Length object = (Length) obj;
+		if (this.unit == object.unit && Float.compare(this.amount, object.amount) == 0) {
+			return true;
+		}
+		return Math.abs(this.amount - object.convert(this.unit).amount) < 0.00001;
+
 	}
 
 	@Override
@@ -23,8 +28,8 @@ public class Length implements Comparable<Length> {
 		// 1m>1mm
 		// 10000m>1km
 		// TODO !done
-		// return Float.compare(amount, o.convert(unit).amount);
-		return (int) (amount - o.convert(unit).amount);
+		return this.unit == o.unit ? Float.compare(this.amount, o.amount):
+			Float.compare(amount, o.convert(unit).amount);
 	}
 
 	/**
@@ -35,8 +40,7 @@ public class Length implements Comparable<Length> {
 	 */
 	public Length convert(LengthUnit unit) {
 		// TODO done
-		float lenght = (amount * this.unit.getValue()) / unit.value;
-		return new Length(lenght, unit);
+		return new Length(amount * this.unit.getValue()/ unit.getValue(), unit);
 	}
 
 	/**
@@ -46,7 +50,7 @@ public class Length implements Comparable<Length> {
 	@Override
 	public String toString() {
 		// TODO DONE
-		return String.format("%.2f", this.amount) + this.unit.toString();
+	return String.format("%.2f", this.amount) + this.unit.toString();
 	}
 
 }
