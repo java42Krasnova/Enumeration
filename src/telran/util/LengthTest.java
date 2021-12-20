@@ -65,6 +65,7 @@ class LengthTest {
 	@Test
 	void testToString() {
 		// TODO done!
+		// V.R. ',' has to be changed to '.' ("4.00", not "4,00")
 		assertEquals("4,00FT", l4_FT.toString());
 		System.out.println(l1_CM.toString());// rounded
 	}
