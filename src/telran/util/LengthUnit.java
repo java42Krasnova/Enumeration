@@ -12,7 +12,6 @@ public enum LengthUnit {
 	public float getValue() {
 		return value;
 	}
-
 	/**
 	 * 
 	 * @param l1

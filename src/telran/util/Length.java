@@ -1,6 +1,7 @@
 package telran.util;
 
 public class Length implements Comparable<Length> {
+	private static final float FLT_EPSILON = 0.00001f;
 	float amount;
 	LengthUnit unit;
 
@@ -15,12 +16,14 @@ public class Length implements Comparable<Length> {
 	@Override
 	public boolean equals(Object obj) {
 		// TODO done!
+		if(obj == null ||!getClass().equals(obj.getClass())) {
+			return false;
+		}
 		Length object = (Length) obj;
-		if (this.unit == object.unit && Float.compare(this.amount, object.amount) == 0) {
+		if (this == obj || compareTo(object) == 0) {
 			return true;
 		}
-		return Math.abs(this.amount - object.convert(this.unit).amount) < 0.00001;
-
+		return Math.abs(this.amount - object.convert(this.unit).amount) < FLT_EPSILON;
 	}
 
 	@Override

@@ -35,6 +35,8 @@ class LengthTest {
 		assertTrue(l1.equals(l1));
 		assertFalse(l3.equals(l2_IN));
 		assertFalse(l1_CM.equals(new Length(12.71f, LengthUnit.CM))); //12.7cm!=12.71cm
+		assertFalse(l2_IN.equals(null));
+		assertFalse(l3_KM.equals(new Object()));
 	}
 
 	@Test
