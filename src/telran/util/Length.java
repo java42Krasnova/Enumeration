@@ -9,31 +9,26 @@ public class Length implements Comparable<Length> {
 		this.amount = amount;
 		this.unit = unit;
 	}
-
 	/**
 	 * equals two length objects according to LengthUnit 10m == 10000mm
 	 */
 	@Override
 	public boolean equals(Object obj) {
 		// TODO done!
-		if(obj == null ||!getClass().equals(obj.getClass())) {
+		if (obj == null) {
 			return false;
 		}
-		/* V.R.
-		 * 1. The casting has to be placed AFTER cheking
-		 * 2. The compateTo call is unnecessary
-		 */
-		Length object = (Length) obj;
-		if (this == obj || compareTo(object) == 0) {
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		if (this == obj) {
 			return true;
 		}
-		/* V.R.
-		 *  It is better to convert only objects have to be converted. Foe example,
-		 *  if(object.unit != unit) {
-		 *		object = object.convert(unit);
-		 *	}
-		 */
-		return Math.abs(this.amount - object.convert(this.unit).amount) < FLT_EPSILON;
+		Length object = (Length) obj;
+		if (object.unit != unit) {
+			object = object.convert(unit);
+		}
+		return Math.abs(amount - object.amount) < FLT_EPSILON;
 	}
 
 	@Override
@@ -41,10 +36,13 @@ public class Length implements Comparable<Length> {
 		// 1m>1mm
 		// 10000m>1km
 		// TODO !done
-		// V.R. ??? Math.abs()
-		// V.R. Pay attention to using this!
-		return this.unit == o.unit ? Float.compare(this.amount, o.amount):
-			Float.compare(amount, o.convert(unit).amount);
+		if (o.unit != unit) {
+			o = o.convert(unit);
+		}
+		if (Math.abs(amount - o.amount) < FLT_EPSILON) {
+			return 0;
+		}
+		return Float.compare(amount, o.amount);
 	}
 
 	/**
@@ -55,7 +53,7 @@ public class Length implements Comparable<Length> {
 	 */
 	public Length convert(LengthUnit unit) {
 		// TODO done
-		return new Length(amount * this.unit.getValue()/ unit.getValue(), unit);
+		return new Length(amount * this.unit.getValue() / unit.getValue(), unit);
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class Length implements Comparable<Length> {
 	@Override
 	public String toString() {
 		// TODO DONE
-	return String.format("%.2f", this.amount) + this.unit.toString();
+		return String.format("%.2f", amount) + unit.toString();
 	}
 
 }
