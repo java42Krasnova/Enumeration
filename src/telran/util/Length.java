@@ -1,7 +1,6 @@
 package telran.util;
 
 public class Length implements Comparable<Length> {
-	// V.R. Cool! Exactly so!
 	private static final float FLT_EPSILON = 0.00001f;
 	float amount;
 	LengthUnit unit;
@@ -20,20 +19,11 @@ public class Length implements Comparable<Length> {
 		if(obj == null ||!getClass().equals(obj.getClass())) {
 			return false;
 		}
-		/* V.R.
-		 * 1. The casting has to be placed AFTER cheking
-		 * 2. The compateTo call is unnecessary
-		 */
 		Length object = (Length) obj;
 		if (this == obj || compareTo(object) == 0) {
 			return true;
 		}
-		/* V.R.
-		 *  It is better to convert only objects have to be converted. Foe example,
-		 *  if(object.unit != unit) {
-		 *		object = object.convert(unit);
-		 *	}
-		 */
+		
 		return Math.abs(this.amount - object.convert(this.unit).amount) < FLT_EPSILON;
 	}
 
@@ -42,8 +32,6 @@ public class Length implements Comparable<Length> {
 		// 1m>1mm
 		// 10000m>1km
 		// TODO !done
-		// V.R. ??? Math.abs()
-		// V.R. Pay attention to using this!
 		return this.unit == o.unit ? Float.compare(this.amount, o.amount):
 			Float.compare(amount, o.convert(unit).amount);
 	}
