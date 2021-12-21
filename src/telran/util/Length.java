@@ -1,7 +1,6 @@
 package telran.util;
 
 public class Length implements Comparable<Length> {
-	// V.R. Cool! Exactly so!
 	private static final float FLT_EPSILON = 0.00001f;
 	float amount;
 	LengthUnit unit;
